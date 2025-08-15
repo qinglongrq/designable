@@ -46,6 +46,7 @@ GlobalRegistry.registerDesignerLocales({
       Layouts: '布局组件',
       Arrays: '自增组件',
       Displays: '展示组件',
+      Business: '业务组件',
     },
   },
   'en-US': {
@@ -54,6 +55,7 @@ GlobalRegistry.registerDesignerLocales({
       Layouts: 'Layouts',
       Arrays: 'Arrays',
       Displays: 'Displays',
+      Business: 'Business',
     },
   },
   'ko-KR': {
@@ -62,6 +64,7 @@ GlobalRegistry.registerDesignerLocales({
       Layouts: '레이아웃',
       Arrays: '배열',
       Displays: '디스플레이',
+      Business: 'Business',
     },
   },
 })

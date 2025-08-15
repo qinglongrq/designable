@@ -26,4 +26,5 @@ export {
   FormCollapse,
   FormLayout,
   FormGrid,
+  IdentityVerification,
 } from './components'

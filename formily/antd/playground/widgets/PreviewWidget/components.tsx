@@ -28,6 +28,7 @@ export {
   ArrayCards,
 } from '@formily/antd-v5'
 export { Card, Slider, Rate } from 'antd'
+import { IdentityVerification } from '../../../src/components/IdentityVerification'
 
 export const Text: React.FC<{
   value?: string

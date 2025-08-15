@@ -5,13 +5,16 @@ import { transformToSchema } from '@pind/designable-formily-transformer'
 import React, { useMemo } from 'react'
 import * as components from './components'
 import { Form } from './components'
-
+import { IdentityVerification } from '../../../src/components/IdentityVerification'
 import { Alert } from 'antd'
 
 const { ErrorBoundary } = Alert
 
 const SchemaField = createSchemaField({
-  components,
+  components: {
+    ...components,
+    IdentityVerification,
+  },
 })
 
 export interface IPreviewWidgetProps {

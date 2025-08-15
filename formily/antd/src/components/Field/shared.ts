@@ -3,6 +3,7 @@ import {
   ReactionsSetter,
   DataSourceSetter,
   ValidatorSetter,
+  ConditionalDisplaySetter,
 } from '@pind/designable-formily-setters'
 import { FormItemSwitcher } from '../../common/FormItemSwitcher'
 import { AllSchemas } from '../../schemas'
@@ -130,6 +131,10 @@ export const createFieldSchema = (
             'x-decorator': 'FormItem',
             'x-component': DataSourceSetter,
           },
+          'x-conditional-display': {
+            'x-decorator': 'FormItem',
+            'x-component': ConditionalDisplaySetter,
+          },
           'x-reactions': {
             'x-decorator': 'FormItem',
             'x-component': ReactionsSetter,
@@ -207,6 +212,10 @@ export const createVoidFieldSchema = (
             'x-component-props': {
               defaultValue: 'editable',
             },
+          },
+          'x-conditional-display': {
+            'x-decorator': 'FormItem',
+            'x-component': ConditionalDisplaySetter,
           },
           'x-reactions': {
             'x-decorator': 'FormItem',

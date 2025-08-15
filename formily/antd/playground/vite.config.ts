@@ -50,7 +50,29 @@ export default defineConfig({
       },
     },
   },
-  server: {},
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://10.9.10.70:7033',
+        changeOrigin: true,
+        secure: false,
+        ws: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+        configure: (proxy, options) => {
+          proxy.on('proxyReq', (proxyReq, req, res) => {
+            console.log('代理请求:', req.method, req.url, '->', options.target + req.url.replace(/^\/api/, ''))
+          })
+          proxy.on('proxyRes', (proxyRes, req, res) => {
+            console.log('代理响应:', proxyRes.statusCode, req.url)
+          })
+          proxy.on('error', (err, req, res) => {
+            console.log('代理错误:', err.message, req.url)
+          })
+        },
+      },
+    },
+    cors: true,
+  },
   build: {
     sourcemap: true,
     outDir: './build',

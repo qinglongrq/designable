@@ -76,5 +76,11 @@ export default defineConfig({
   build: {
     sourcemap: true,
     outDir: './build',
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, '../index.html'),
+        'form-fill': resolve(__dirname, '../form-fill.html'),
+      },
+    },
   },
 })

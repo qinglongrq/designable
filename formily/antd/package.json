@@ -18,6 +18,7 @@
   },
   "scripts": {
     "start": "vite --host --config playground/vite.config.ts",
+    "start:form-fill": "vite --host --config playground/vite.config.ts --open /form-fill.html",
     "build": "rimraf -rf lib esm dist && npm run build:cjs && npm run build:esm && ts-node copy",
     "build:cjs": "tsc --project tsconfig.build.json",
     "build:esm": "tsc --project tsconfig.build.json --module es2015 --outDir esm",
@@ -69,7 +70,8 @@
     "classnames": "^2.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-is": "^18.2.0"
+    "react-is": "^18.2.0",
+    "react-router-dom": "^7.8.0"
   },
   "publishConfig": {
     "access": "public"

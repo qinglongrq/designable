@@ -1,0 +1,186 @@
+{
+  "form": {
+    "labelCol": 6,
+    "wrapperCol": 18,
+    "layout": "horizontal"
+  },
+  "schema": {
+    "type": "object",
+    "properties": {
+      "basicInfo": {
+        "type": "void",
+        "title": "基本信息",
+        "x-component": "Card",
+        "x-component-props": {
+          "title": "个人基本信息",
+          "type": "inner",
+          "size": "small"
+        },
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "姓名",
+            "required": true,
+            "x-decorator": "FormItem",
+            "x-component": "Input",
+            "x-component-props": {
+              "placeholder": "请输入姓名"
+            }
+          },
+          "age": {
+            "type": "number",
+            "title": "年龄",
+            "required": true,
+            "x-decorator": "FormItem",
+            "x-component": "NumberPicker",
+            "x-component-props": {
+              "placeholder": "请输入年龄",
+              "min": 1,
+              "max": 120
+            }
+          },
+          "gender": {
+            "type": "string",
+            "title": "性别",
+            "required": true,
+            "x-decorator": "FormItem",
+            "x-component": "Select",
+            "x-component-props": {
+              "placeholder": "请选择性别"
+            },
+            "enum": [
+              { "label": "男", "value": "male" },
+              { "label": "女", "value": "female" }
+            ]
+          },
+          "birthday": {
+            "type": "string",
+            "title": "出生日期",
+            "x-decorator": "FormItem",
+            "x-component": "DatePicker",
+            "x-component-props": {
+              "placeholder": "请选择出生日期"
+            }
+          }
+        }
+      },
+      "contactInfo": {
+        "type": "void",
+        "title": "联系信息",
+        "x-component": "Card",
+        "x-component-props": {
+          "title": "联系方式",
+          "type": "inner",
+          "size": "small"
+        },
+        "properties": {
+          "email": {
+            "type": "string",
+            "title": "邮箱",
+            "required": true,
+            "x-decorator": "FormItem",
+            "x-component": "Input",
+            "x-component-props": {
+              "placeholder": "请输入邮箱地址"
+            },
+            "x-validator": [
+              {
+                "format": "email",
+                "message": "邮箱格式不正确"
+              }
+            ]
+          },
+          "phone": {
+            "type": "string",
+            "title": "手机号码",
+            "required": true,
+            "x-decorator": "FormItem",
+            "x-component": "Input",
+            "x-component-props": {
+              "placeholder": "请输入手机号码"
+            },
+            "x-validator": [
+              {
+                "pattern": "^1[3-9]\\d{9}$",
+                "message": "手机号码格式不正确"
+              }
+            ]
+          },
+          "address": {
+            "type": "string",
+            "title": "详细地址",
+            "x-decorator": "FormItem",
+            "x-component": "Input.TextArea",
+            "x-component-props": {
+              "placeholder": "请输入详细地址",
+              "rows": 3
+            }
+          }
+        }
+      },
+      "preferences": {
+        "type": "void",
+        "title": "偏好设置",
+        "x-component": "Card",
+        "x-component-props": {
+          "title": "个人偏好",
+          "type": "inner",
+          "size": "small"
+        },
+        "properties": {
+          "interests": {
+            "type": "array",
+            "title": "兴趣爱好",
+            "x-decorator": "FormItem",
+            "x-component": "Checkbox.Group",
+            "enum": [
+              { "label": "阅读", "value": "reading" },
+              { "label": "运动", "value": "sports" },
+              { "label": "音乐", "value": "music" },
+              { "label": "旅行", "value": "travel" },
+              { "label": "摄影", "value": "photography" },
+              { "label": "编程", "value": "programming" }
+            ]
+          },
+          "experience": {
+            "type": "number",
+            "title": "工作经验",
+            "x-decorator": "FormItem",
+            "x-component": "Slider",
+            "x-component-props": {
+              "min": 0,
+              "max": 20,
+              "marks": {
+                "0": "0年",
+                "5": "5年",
+                "10": "10年",
+                "15": "15年",
+                "20": "20年+"
+              }
+            }
+          },
+          "newsletter": {
+            "type": "boolean",
+            "title": "订阅邮件通知",
+            "x-decorator": "FormItem",
+            "x-component": "Switch",
+            "x-component-props": {
+              "checkedChildren": "是",
+              "unCheckedChildren": "否"
+            }
+          }
+        }
+      },
+      "comments": {
+        "type": "string",
+        "title": "备注信息",
+        "x-decorator": "FormItem",
+        "x-component": "Input.TextArea",
+        "x-component-props": {
+          "placeholder": "请输入其他备注信息",
+          "rows": 4
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,184 @@
+{
+    "form": {
+      "labelCol": 6,
+      "wrapperCol": 12
+    },
+    "schema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "姓名",
+          "x-decorator": "FormItem",
+          "x-component": "Input",
+          "x-validator": [],
+          "x-component-props": {},
+          "x-decorator-props": {},
+          "x-designable-id": "7vt3hv009fa",
+          "x-index": 0,
+          "name": "name"
+        },
+        "idCard": {
+          "type": "string",
+          "title": "身份证",
+          "x-decorator": "FormItem",
+          "x-component": "Input",
+          "x-validator": "idcard",
+          "x-component-props": {},
+          "x-decorator-props": {},
+          "x-designable-id": "y4kk9pjgtfz",
+          "x-index": 1,
+          "name": "idCard"
+        },
+        "phone": {
+          "type": "string",
+          "title": "手机号",
+          "x-decorator": "FormItem",
+          "x-component": "Input",
+          "x-validator": [],
+          "x-component-props": {},
+          "x-decorator-props": {},
+          "name": "phone",
+          "x-designable-id": "92vvoox1a2y",
+          "x-index": 2
+        },
+        "sex": {
+          "title": "性别",
+          "x-decorator": "FormItem",
+          "x-component": "Select",
+          "x-validator": [],
+          "x-component-props": {},
+          "x-decorator-props": {},
+          "name": "sex",
+          "x-reactions": {
+            "dependencies": [
+              {
+                "property": "value",
+                "type": "any",
+                "source": "name",
+                "name": "name"
+              }
+            ],
+            "fulfill": {
+              "state": {
+                "visible": "{{$deps.name == '唐'}}"
+              }
+            }
+          },
+          "x-conditional-display": {
+            "dependencies": [
+              {
+                "property": "value",
+                "type": "any",
+                "source": "name",
+                "name": "name"
+              }
+            ],
+            "fulfill": {
+              "state": {
+                "visible": "{{$deps.name == '唐'}}"
+              }
+            }
+          },
+          "enum": [
+            {
+              "children": [],
+              "label": "男",
+              "value": "1"
+            },
+            {
+              "children": [],
+              "label": "女",
+              "value": "0"
+            }
+          ],
+          "x-designable-id": "nvjf25gmipz",
+          "x-index": 3
+        },
+        "qq": {
+          "type": "string",
+          "title": "你冲q币吗？",
+          "x-decorator": "FormItem",
+          "x-component": "Input",
+          "x-validator": [],
+          "x-component-props": {},
+          "x-decorator-props": {},
+          "name": "qq",
+          "x-reactions": {
+            "dependencies": [
+              {
+                "property": "value",
+                "type": "any",
+                "source": "sex",
+                "name": "sex"
+              }
+            ],
+            "fulfill": {
+              "state": {
+                "visible": "{{$deps.sex == '1'}}"
+              }
+            }
+          },
+          "x-conditional-display": {
+            "dependencies": [
+              {
+                "property": "value",
+                "type": "any",
+                "source": "sex",
+                "name": "sex"
+              }
+            ],
+            "fulfill": {
+              "state": {
+                "visible": "{{$deps.sex == '1'}}"
+              }
+            }
+          },
+          "x-designable-id": "xomaqxl58rs",
+          "x-index": 4
+        },
+        "wmqmcle4f6k": {
+          "title": "实名认证",
+          "x-decorator": "FormItem",
+          "x-component": "IdentityVerification",
+          "x-component-props": {
+            "style": {}
+          },
+          "x-validator": [],
+          "x-decorator-props": {},
+          "x-designable-id": "wmqmcle4f6k",
+          "x-index": 5,
+          "properties": {
+            "name": {
+              "type": "string",
+              "title": "姓名",
+              "x-decorator": "FormItem",
+              "x-component": "Input",
+              "x-component-props": {
+                "placeholder": "请输入真实姓名"
+              },
+              "required": false,
+              "name": "name",
+              "x-designable-id": "wtkoypf1qp2",
+              "x-index": 0
+            },
+            "idCard": {
+              "type": "string",
+              "title": "身份证号",
+              "x-decorator": "FormItem",
+              "x-component": "Input",
+              "x-component-props": {
+                "placeholder": "请输入身份证号码"
+              },
+              "required": false,
+              "x-validator": "idcard",
+              "name": "idCard",
+              "x-designable-id": "oel34jzmjkj",
+              "x-index": 1
+            }
+          }
+        }
+      },
+      "x-designable-id": "pxiy55a41bu"
+    }
+  }

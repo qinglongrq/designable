@@ -1,5 +1,7 @@
 import React, { useMemo } from 'react'
 import { createRoot } from 'react-dom/client'
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom'
+import { Button, Space } from 'antd'
 import {
   Designer,
   DesignerToolsWidget,
@@ -37,6 +39,7 @@ import {
 import { saveSchema } from './service'
 import { sources } from '@pind/designable-formily-antd'
 import { Alert } from 'antd'
+import FormFillPage from '../src/pages/FormFill'
 setNpmCDNRegistry('//unpkg.com')
 const { ErrorBoundary } = Alert
 GlobalRegistry.registerDesignerLocales({
@@ -69,7 +72,39 @@ GlobalRegistry.registerDesignerLocales({
   },
 })
 
-const App = () => {
+// 导航组件
+const Navigation = () => {
+  const location = useLocation()
+  
+  return (
+    <div style={{ 
+      padding: '16px', 
+      background: '#fff', 
+      borderBottom: '1px solid #e8e8e8',
+      textAlign: 'center'
+    }}>
+      <Space size="large">
+        <Link to="/">
+          <Button 
+            type={location.pathname === '/' ? 'primary' : 'default'}
+          >
+            表单设计器
+          </Button>
+        </Link>
+        <Link to="/form-fill">
+          <Button 
+            type={location.pathname === '/form-fill' ? 'primary' : 'default'}
+          >
+            表单填写页面
+          </Button>
+        </Link>
+      </Space>
+    </div>
+  )
+}
+
+// 设计器页面组件
+const DesignerPage = () => {
   const engine = useMemo(
     () =>
       createDesigner({
@@ -88,6 +123,7 @@ const App = () => {
       }),
     []
   )
+
   return (
     <Designer engine={engine}>
       <StudioPanel logo={<LogoWidget />} actions={<ActionsWidget />}>
@@ -135,6 +171,21 @@ const App = () => {
         </SettingsPanel>
       </StudioPanel>
     </Designer>
+  )
+}
+
+// 主App组件
+const App = () => {
+  return (
+    <Router>
+      <div>
+        <Navigation />
+        <Routes>
+          <Route path="/" element={<DesignerPage />} />
+          <Route path="/form-fill" element={<FormFillPage />} />
+        </Routes>
+      </div>
+    </Router>
   )
 }
 

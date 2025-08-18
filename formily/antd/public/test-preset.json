@@ -1,0 +1,29 @@
+{
+  "form": {
+    "labelCol": 6,
+    "wrapperCol": 18,
+    "layout": "horizontal"
+  },
+  "schema": {
+    "type": "object",
+    "properties": {
+      "gender": {
+        "type": "string",
+        "title": "性别测试",
+        "x-decorator": "FormItem",
+        "x-component": "Select",
+        "x-component-props": {
+          "placeholder": "请选择性别"
+        },
+        "x-preset-data": "preset:gender"
+      },
+      "interests": {
+        "type": "array",
+        "title": "兴趣测试",
+        "x-decorator": "FormItem",
+        "x-component": "Checkbox.Group",
+        "x-preset-data": "preset:interests"
+      }
+    }
+  }
+}

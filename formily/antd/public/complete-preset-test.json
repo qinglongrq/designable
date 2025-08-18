@@ -1,0 +1,104 @@
+{
+  "form": {
+    "labelCol": 6,
+    "wrapperCol": 18,
+    "layout": "horizontal"
+  },
+  "schema": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "title": "姓名",
+        "required": true,
+        "x-decorator": "FormItem",
+        "x-component": "Input",
+        "x-component-props": {
+          "placeholder": "请输入姓名"
+        }
+      },
+      "gender": {
+        "type": "string",
+        "title": "性别（Select组件）",
+        "required": true,
+        "x-decorator": "FormItem",
+        "x-component": "Select",
+        "x-component-props": {
+          "placeholder": "请选择性别"
+        },
+        "x-preset-data": "preset:gender"
+      },
+      "region": {
+        "type": "array",
+        "title": "地区（Cascader组件）",
+        "x-decorator": "FormItem",
+        "x-component": "Cascader",
+        "x-component-props": {
+          "placeholder": "请选择省市县",
+          "changeOnSelect": false,
+          "expandTrigger": "hover"
+        },
+        "x-preset-data": "preset:china-regions"
+      },
+      "education": {
+        "type": "string",
+        "title": "教育程度（TreeSelect组件）",
+        "x-decorator": "FormItem",
+        "x-component": "TreeSelect",
+        "x-component-props": {
+          "placeholder": "请选择教育程度",
+          "treeDefaultExpandAll": true
+        },
+        "x-preset-data": "preset:education"
+      },
+      "occupation": {
+        "type": "array",
+        "title": "职业（Cascader组件）",
+        "x-decorator": "FormItem",
+        "x-component": "Cascader",
+        "x-component-props": {
+          "placeholder": "请选择职业分类",
+          "changeOnSelect": true
+        },
+        "x-preset-data": "preset:occupation"
+      },
+      "interests": {
+        "type": "array",
+        "title": "兴趣爱好（Checkbox.Group组件）",
+        "x-decorator": "FormItem",
+        "x-component": "Checkbox.Group",
+        "x-preset-data": "preset:interests"
+      },
+      "favoriteGender": {
+        "type": "string",
+        "title": "偏好性别（Radio.Group组件）",
+        "x-decorator": "FormItem",
+        "x-component": "Radio.Group",
+        "x-preset-data": "preset:gender"
+      },
+      "phone": {
+        "type": "string",
+        "title": "手机号码（普通Input）",
+        "x-decorator": "FormItem",
+        "x-component": "Input",
+        "x-component-props": {
+          "placeholder": "请输入手机号码"
+        }
+      },
+      "manualSelect": {
+        "type": "string",
+        "title": "手动配置选项（Select组件）",
+        "x-decorator": "FormItem",
+        "x-component": "Select",
+        "x-component-props": {
+          "placeholder": "请选择"
+        },
+        "enum": [
+          { "label": "选项A", "value": "a" },
+          { "label": "选项B", "value": "b" },
+          { "label": "选项C", "value": "c" }
+        ]
+      }
+    }
+  }
+}

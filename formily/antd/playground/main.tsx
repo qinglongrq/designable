@@ -50,6 +50,7 @@ GlobalRegistry.registerDesignerLocales({
       Arrays: '自增组件',
       Displays: '展示组件',
       Business: '业务组件',
+      generally: '常用组件',
     },
   },
   'en-US': {
@@ -59,6 +60,7 @@ GlobalRegistry.registerDesignerLocales({
       Arrays: 'Arrays',
       Displays: 'Displays',
       Business: 'Business',
+      generally: 'Generally',
     },
   },
   'ko-KR': {
@@ -68,6 +70,7 @@ GlobalRegistry.registerDesignerLocales({
       Arrays: '배열',
       Displays: '디스플레이',
       Business: 'Business',
+      generally: 'Generally',
     },
   },
 })

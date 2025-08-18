@@ -4,6 +4,7 @@ import {
   DataSourceSetter,
   ValidatorSetter,
   ConditionalDisplaySetter,
+  PresetDataSetter,
 } from '@pind/designable-formily-setters'
 import { FormItemSwitcher } from '../../common/FormItemSwitcher'
 import { AllSchemas } from '../../schemas'
@@ -130,6 +131,10 @@ export const createFieldSchema = (
           enum: {
             'x-decorator': 'FormItem',
             'x-component': DataSourceSetter,
+          },
+          'x-preset-data': {
+            'x-decorator': 'FormItem',
+            'x-component': PresetDataSetter,
           },
           'x-conditional-display': {
             'x-decorator': 'FormItem',

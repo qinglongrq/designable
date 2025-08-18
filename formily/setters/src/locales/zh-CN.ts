@@ -9,6 +9,7 @@ const ValidatorFormats = [
   { label: '中文格式', value: 'zh' },
   { label: '日期格式', value: 'date' },
   { label: '邮编格式', value: 'zip' },
+  { label: '微信号格式', value: 'wechat' },
 ]
 
 export default {
@@ -94,6 +95,20 @@ export default {
       ValidatorSetter: {
         pleaseSelect: '请选择',
         formats: ValidatorFormats,
+      },
+      PresetDataSetter: {
+        title: '预设数据',
+        selectPresetType: '选择预设数据类型',
+        selectedPreset: '已选择',
+        clearSelection: '清除选择',
+        presetDetails: '预设数据详情',
+        presetTypeId: '预设类型ID',
+        name: '名称',
+        description: '描述',
+        recommendedComponent: '推荐组件',
+        dataScale: '数据规模',
+        exampleData: '示例数据',
+        helpText: '选择预设数据类型可以避免在配置中存储大量枚举数据，提高配置文件的可读性和维护性。',
       },
     },
   },

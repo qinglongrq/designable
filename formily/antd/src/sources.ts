@@ -27,4 +27,18 @@ export {
   FormLayout,
   FormGrid,
   IdentityVerification,
+  // 自定义组件
+  Name,
+  IdCard,
+  Phone,
+  WeChat,
+  Email,
+  Age,
+  Company,
+  Position,
+  Gender,
+  Address,
+  Nation,
+  PoliticalStatus,
+  Education,
 } from './components'

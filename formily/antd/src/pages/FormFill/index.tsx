@@ -1,3 +1,16 @@
+import { IdentityVerification } from '../../components/IdentityVerification' // 直接导入IdentityVerification组件
+import { Name } from '../../components/Name' // 直接导入Name组件
+import { IdCard } from '../../components/IdCard' // 直接导入IdCard组件
+import { Phone } from '../../components/Phone' // 直接导入Phone组件
+import { WeChat } from '../../components/WeChat' // 直接导入WeChat组件
+import { Email } from '../../components/Email' // 直接导入Email组件
+import { Age } from '../../components/Age' // 直接导入Age组件
+import { Company } from '../../components/Company' // 直接导入Company组件
+import { Position } from '../../components/Position' // 直接导入Position组件
+import { Address } from '../../components/Address' // 直接导入Address组件
+import { Nation } from '../../components/Nation' // 直接导入Nation组件
+import { PoliticalStatus } from '../../components/PoliticalStatus' // 直接导入PoliticalStatus组件
+import { Education } from '../../components/Education' // 直接导入Education组件
 import React, { useState, useCallback } from 'react'
 import { 
   Button, 
@@ -20,11 +33,39 @@ import { createForm } from '@formily/core'
 import { FormProvider, FormConsumer, createSchemaField } from '@formily/react'
 import * as ANTD from '@formily/antd-v5'
 import { Card, Slider, Rate } from 'antd'
-import { IdentityVerification } from '../../components/IdentityVerification'
-import { addForm } from '../../model/form'
+import { SubmitFormList } from '../../model/form'
+import { getPresetData, isPresetType, extractPresetType, PRESET_DATA_REGISTRY } from '../../data/presets'
 import './styles.less'
-
+import { cascaderOptions } from '../../data/AddressOptions'
 const { Title, Paragraph } = Typography
+
+// 处理Schema中的特殊字段配置
+const processSchemaFields = (schema: any): void => {
+  // 处理address字段的特殊配置
+  if (schema.properties && schema.properties.address) {
+    schema.properties.address.enum = cascaderOptions
+    console.log('已为address字段添加enum配置:', schema.properties.address.enum)
+  }
+  
+  // 后续可以在这里添加更多字段的处理逻辑
+  // 例如：
+  // if (schema.properties && schema.properties.city) {
+  //   schema.properties.city.enum = cityOptions
+  // }
+  
+  // if (schema.properties && schema.properties.department) {
+  //   schema.properties.department.enum = departmentOptions
+  // }
+}
+
+// 简化的Schema处理（预设数据现在在组件渲染时处理）
+const processSchema = (schema: any): any => {
+  // 处理特殊字段配置
+  processSchemaFields(schema)
+  
+  // 直接返回原始schema，预设数据在组件层面处理
+  return schema
+}
 
 // Text组件
 const Text: React.FC<{
@@ -36,9 +77,62 @@ const Text: React.FC<{
   return React.createElement(tagName, props, value || content)
 }
 
-// 创建 SchemaField 组件，只使用基本组件
-const SchemaField = createSchemaField({
-  components: {
+// 定义选择框类型组件
+const SELECTION_COMPONENTS = {
+  'Select': 'options',
+  'TreeSelect': 'options', 
+  'Cascader': 'options',
+  'Checkbox.Group': 'options',
+  'Radio.Group': 'options'
+}
+
+// 创建支持预设数据的组件包装器
+const createPresetComponent = (OriginalComponent: any, componentName: string) => {
+  return React.forwardRef((props: any, ref: any) => {
+    const { schema } = props
+    let finalProps = { ...props }
+    
+    // 只处理选择框类型组件
+    if (SELECTION_COMPONENTS[componentName] && schema) {
+      // 检查是否存在 x-preset-data 字段
+      if (schema['x-preset-data'] && isPresetType(schema['x-preset-data'])) {
+        const presetType = extractPresetType(schema['x-preset-data'])
+        const presetData = getPresetData(presetType)
+        
+        if (presetData && presetData.length > 0) {
+          const optionsProp = SELECTION_COMPONENTS[componentName]
+          finalProps[optionsProp] = presetData
+          console.log(`${componentName}组件从x-preset-data加载预设数据 "${presetType}":`, presetData)
+        } else {
+          console.warn(`${componentName}组件未能获取预设数据 "${presetType}"`)
+        }
+      }
+      // 兼容处理：如果enum字段也是预设类型
+      else if (schema.enum && isPresetType(schema.enum)) {
+        const presetType = extractPresetType(schema.enum)
+        const presetData = getPresetData(presetType)
+        
+        if (presetData && presetData.length > 0) {
+          const optionsProp = SELECTION_COMPONENTS[componentName]
+          finalProps[optionsProp] = presetData
+          console.log(`${componentName}组件从enum加载预设数据 "${presetType}":`, presetData)
+        }
+      }
+      // 如果已经有options/enum数据，保持不变
+      else if (schema.enum && Array.isArray(schema.enum)) {
+        const optionsProp = SELECTION_COMPONENTS[componentName]
+        finalProps[optionsProp] = schema.enum
+        console.log(`${componentName}组件使用Schema中的enum数据:`, schema.enum)
+      }
+    }
+    
+    return <OriginalComponent ref={ref} {...finalProps} />
+  })
+}
+
+// 创建组件注册表，自动为选择框类型组件添加预设数据支持
+const createComponentsRegistry = () => {
+  const components: any = {
     // 表单组件
     Form: ANTD.Form,
     FormItem: ANTD.FormItem,
@@ -47,20 +141,33 @@ const SchemaField = createSchemaField({
     FormTab: ANTD.FormTab,
     FormCollapse: ANTD.FormCollapse,
     
-    // 输入组件
+    // 基础输入组件（不需要预设数据支持）
     Input: ANTD.Input,
+    'Input.TextArea': ANTD.Input.TextArea,
     Password: ANTD.Password,
     NumberPicker: ANTD.NumberPicker,
-    Select: ANTD.Select,
-    TreeSelect: ANTD.TreeSelect,
-    Cascader: ANTD.Cascader,
     DatePicker: ANTD.DatePicker,
     TimePicker: ANTD.TimePicker,
     Upload: ANTD.Upload,
     Switch: ANTD.Switch,
-    Radio: ANTD.Radio,
-    Checkbox: ANTD.Checkbox,
     Transfer: ANTD.Transfer,
+    Checkbox: ANTD.Checkbox,
+    Radio: ANTD.Radio,
+    
+    // 自定义组件 - 直接注册
+    Name, // 姓名组件
+    IdCard, // 身份证组件
+    Phone, // 手机号码组件
+    WeChat, // 微信号组件
+    Email, // 邮箱组件
+    Age, // 年龄组件
+    Company, // 公司名称组件
+    Position, // 职位名称组件
+    Address, // 地址组件
+    Nation, // 民族组件
+    PoliticalStatus, // 政治面貌组件
+    Education, // 学历组件
+    IdentityVerification, // 身份验证组件
     
     // 数组组件
     ArrayTable: ANTD.ArrayTable,
@@ -71,8 +178,28 @@ const SchemaField = createSchemaField({
     Slider,
     Rate,
     Text,
-    IdentityVerification,
-  },
+  }
+  
+  // 为选择框类型组件添加预设数据支持
+  Object.keys(SELECTION_COMPONENTS).forEach(componentName => {
+    const originalComponent = componentName === 'Checkbox.Group' 
+      ? ANTD.Checkbox.Group 
+      : componentName === 'Radio.Group' 
+        ? ANTD[componentName]
+        : ANTD[componentName]
+        
+    if (originalComponent) {
+      components[componentName] = createPresetComponent(originalComponent, componentName)
+      console.log(`已为 ${componentName} 组件添加预设数据支持`)
+    }
+  })
+  
+  return components
+}
+
+// 创建 SchemaField 组件
+const SchemaField = createSchemaField({
+  components: createComponentsRegistry(),
 })
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -85,6 +212,14 @@ const FormFillPage: React.FC<FormFillPageProps> = () => {
   const [loading, setLoading] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [submitResult, setSubmitResult] = useState<any>(null)
+
+  // 测试预设数据是否正常加载
+  React.useEffect(() => {
+    console.log('预设数据注册表:', PRESET_DATA_REGISTRY)
+    console.log('测试获取性别数据:', getPresetData('gender'))
+    console.log('测试isPresetType:', isPresetType('preset:gender'))
+    console.log('测试extractPresetType:', extractPresetType('preset:gender'))
+  }, [])
 
   // 处理JSON配置文件上传
   const handleConfigUpload: UploadProps['customRequest'] = async (options) => {
@@ -101,13 +236,17 @@ const FormFillPage: React.FC<FormFillPageProps> = () => {
           
           // 如果配置中直接包含schema，则使用它
           // 否则假设整个配置就是schema
-          const schemaData = config.schema || config
-          console.log('Schema数据:', schemaData)
+          const rawSchemaData = config.schema || config
+          console.log('原始Schema数据:', rawSchemaData)
+          
+          // 处理Schema（预设数据在组件渲染时处理）
+          const processedSchema = processSchema(rawSchemaData)
+          console.log('Schema数据:', processedSchema)
           
           // 设置转换后的数据
           setTransformedData({
             form: config.form || {},
-            schema: schemaData
+            schema: processedSchema
           })
           
           // 创建表单实例
@@ -152,11 +291,12 @@ const FormFillPage: React.FC<FormFillPageProps> = () => {
       console.log('表单数据:', formData)
       
       // 提交到后端
-      const result = await addForm({
-        schema: jsonConfig,
+      // const result = await SubmitFormList(formData)
+      const result = {
+        success: true,
         data: formData,
-        submitTime: new Date().toISOString()
-      })
+        message: '表单提交成功！'
+      }
       
       console.log('提交结果:', result)
       setSubmitResult({

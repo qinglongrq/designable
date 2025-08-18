@@ -17,6 +17,56 @@
 3. **页面导航**
    - 在任何页面顶部都有导航栏，可以在设计器和填写页面之间切换
 
+## 📋 预设数据功能
+
+### 什么是预设数据？
+预设数据功能允许你在表单配置中使用预设类型字符串替代大量的枚举数据，避免配置文件过大。
+
+### 可用的预设数据类型：
+- `preset:china-regions` - 中国省市县三级联动数据
+- `preset:gender` - 性别选项
+- `preset:education` - 教育程度选项  
+- `preset:occupation` - 职业分类二级选项
+- `preset:interests` - 兴趣爱好选项
+
+### 使用方法：
+
+#### 方法一：在设计器中使用（推荐）
+1. 在表单设计器中添加组件（Select、Cascader、TreeSelect等）
+2. 在右侧属性面板中找到"预设数据"配置项
+3. 点击"选择预设数据类型"按钮
+4. 选择合适的预设数据类型
+5. 导出配置时会自动生成 `x-preset-data` 字段
+
+#### 方法二：直接在JSON配置中使用
+可以通过两种方式在JSON配置中使用预设数据：
+
+**使用 `enum` 字段：**
+```json
+{
+  "gender": {
+    "type": "string",
+    "title": "性别",
+    "x-decorator": "FormItem",
+    "x-component": "Select",
+    "enum": "preset:gender"
+  }
+}
+```
+
+**使用 `x-preset-data` 字段（设计器生成）：**
+```json
+{
+  "region": {
+    "type": "array", 
+    "title": "所在地区",
+    "x-decorator": "FormItem",
+    "x-component": "Cascader",
+    "x-preset-data": "preset:china-regions"
+  }
+}
+```
+
 ### 方式二：独立启动表单填写页面
 
 ```bash
@@ -101,10 +151,13 @@ npm run start:form-fill
 
 ## 📁 示例文件
 
-项目中包含了一个示例配置文件：
-- `formily/antd/public/sample-form-config.json`
+项目中包含了多个示例配置文件：
+- `simple-form-config.json` - 基础表单配置示例
+- `preset-form-config.json` - 使用预设数据的表单配置示例
+- `designer-preset-config.json` - 设计器生成的预设数据配置示例
+- `sample-form-config.json` - 完整功能演示配置
 
-你可以下载这个文件来测试表单填写功能。
+你可以下载这些文件来测试不同的表单填写功能。
 
 ## 🛠️ 技术栈
 
